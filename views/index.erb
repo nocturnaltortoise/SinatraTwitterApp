@@ -1,0 +1,70 @@
+<%== erb :header %>
+<!--Using two equals to unescape this html (escaped by default).-->
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="panel panel-default col-md-4 col-lg-4">
+      <div class="panel-heading">
+        <h1 class="h3">Welcome!</h1>
+      </div>
+
+      <div class="panel-body">
+        <form method="post" action="posting_tweets">
+          <textarea class="spaced-form-element form-control disable-empty" type="text" cols="40" rows="3" maxlength="140" placeholder="Say something..." name="message" value=""></textarea>
+          <input type="submit" name="submit" class="spaced-form-element search-button btn btn-primary" disabled="disabled" value="Tweet"/>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-lg-8">
+      <div class="panel panel-default col-md-11 col-lg-11 col-md-offset-1 col-lg-offset-1">
+        <div class="panel-heading">
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="tweetSortByMenu" data-toggle="dropdown" aria-expanded="true">
+              Sort By
+              <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" role="menu" aria-labelledby="tweetSortByMenu">
+              <li role="presentation"><a role="menuitem" href="/">Time</a></li>
+              <li role="presentation"><a role="menuitem" href="/?order_by=retweets">Retweets</a></li>
+              <li role="presentation"><a role="menuitem" href="/?order_by=favourites">Favourites</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <% if @hash.any? %>
+              <table class="table table-striped table-bordered">
+                <tr>
+                  <th>Tweet</th>
+                  <th><%= @sorted_by %></th>
+                </tr>
+                <% @hash.each do |tweet| %>
+                    <tr>
+                      <td>
+                        <%=tweet[0] %>
+                      </td>
+                      <td>
+                        <%=tweet[1] %>
+                        <!--.created_at.strftime("%R on %d/%m/%Y")-->
+                      </td>
+                    </tr>
+                <%end%>
+              </table>
+          <% else %>
+              <div class="alert alert-danger">
+                <p>Sorry, but there are no tweets to display</p>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<%== erb :footer %>

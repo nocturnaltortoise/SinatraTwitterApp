@@ -1,0 +1,123 @@
+<%== erb :header %>
+
+<!--Table of hashtags, Button to activate following algorithm.-->
+<div class="container">
+
+  <div class="col-lg-7 col-md-7">
+    <div class="well">
+      <p>
+        Our automatic following algorithm follows Twitter users we think would be interested in your brand.
+        Add some hashtags to the list below to follow users who have shown interest in those trends. Hit Follow when you're
+        ready.
+      </p>
+      <p>
+        To unfollow a user already followed by the algorithm, or follow a user previously unfollowed by it,
+        click on the relevant pages above.
+      </p>
+    </div>
+
+    <div class="well centred">
+      <p>Due to limitations with how many requests Twitter accepts, we recommend only pressing this
+        once per day at most.  This process can take up to 2 minutes.</p>
+      <a class="btn btn-primary btn-lg" href="/automatic_following?run=true">Follow!</a>
+    </div>
+
+    <% if @following_successful %>
+        <div class="alert alert-success">
+          <p>Following Successful!</p>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="panel panel-default col-md-4 col-lg-4 col-md-offset-1 col-lg-offset-1">
+    <div class="panel-heading">
+      <h1 class="h3">Hashtags</h1>
+    </div>
+
+    <div class="panel-body">
+      <% unless @db_hashtags.nil? %>
+          <!--Displays a warning if there are no search hashtags.-->
+          <% if @db_hashtags.length == 0 %>
+              <p class="alert alert-danger"> No hashtags in your list!</p>
+              <form class="form-inline" method="get" action="automatic_following">
+                <div class="form-group">
+                  <input class="form-control" type="text" name="new_hashtag" id="new_hashtag" value="<%=params[:new_hashtag] %>" autofocus/>
+                  <input class="btn btn-primary" type="submit" name="submit" value="+"/>
+                </div>
+              </form>
+          <% else %>
+              <table class="table table-striped table-bordered">
+                <tr>
+                  <th></th>
+                  <th>Hashtag</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+                <% @db_hashtags.each_with_index do |hashtag, index| %>
+                    <tr>
+                      <td>
+                        <%=index + 1%>
+                      </td>
+                      <td>
+                        <% if @editing %>
+                            <% if @editinghashtag == hashtag[0] %>
+                                <form class="form-inline" method="post" action="edit_hashtag">
+                                  <input class="form-control" type="text" name="edited_hashtag" id="edited_hashtag" value="<%=hashtag[0] %>" autofocus/>
+                                  <input class="btn btn-success" type="submit" name="submit" value="Save"/>
+                                </form>
+                            <% else %>
+                                <input type="text" name="hashtag" value="<%=hashtag[0] %>" disabled>
+                            <% end %>
+                        <% else %>
+                            <input class="form-control" type="text" name="hashtag" value="<%=hashtag[0] %>" readonly>
+                        <% end %>
+                      </td>
+                      <td>
+                        <!--Link for changing a search hashtag.-->
+                        <% if @editing %>
+                            <p>Edit</p>
+                        <% else %>
+                            <a href="?edit_hashtag=<%= url_encode(hashtag[0]) %>">Edit</a>
+                        <% end %>
+                      </td>
+                      <td>
+                        <!--Link to delete a search hashtag.-->
+                        <% if @editing %>
+                            <p class="text-danger">Delete</p>
+                        <% else %>
+                            <a class="text-danger" href="?delete=<%= url_encode(hashtag[0]) %>">Delete</a>
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                <tr>
+                  <td>
+                    <%= @db_hashtags.length+1 %>
+                  </td>
+                  <td>
+                    <!--Plus button for adding search hashtags.-->
+                    <% if @editing %>
+                        <form class="form-inline" method="post" action="add_hashtag">
+                          <div class="form-group">
+                            <input class="form-control" type="text" name="new_hashtag" id="new_hashtag" placeholder="Add hashtag..." disabled/>
+                            <input class="btn btn-primary" type="submit" name="submit" value="+" disabled/>
+                          </div>
+                        </form>
+                    <% else %>
+                        <form class="form-inline" method="post" action="add_hashtag">
+                          <div class="form-group">
+                            <input class="form-control" type="text" name="new_hashtag" id="new_hashtag" placeholder="Add hashtag..." autofocus/>
+                            <input class="btn btn-primary" type="submit" name="submit" value="+"/>
+                          </div>
+                        </form>
+                    <% end %>
+                  </td>
+                </tr>
+              </table>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%== erb :footer %>

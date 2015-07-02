@@ -1,0 +1,32 @@
+<%== erb :header %>
+
+<div class="container">
+  <div class="panel panel-default col-md-5 col-lg-5">
+    <div class="panel-heading">
+      <h1 class="h3">Enter your tweet and click Tweet!</h1>
+    </div>
+
+    <div class="panel-body">
+
+        <form method="post" action="posting_tweets">
+          <textarea class="spaced-form-element form-control disable-empty" type="text" cols="40" rows="3" maxlength="140" placeholder="Say something..." name="message" value=""></textarea>
+          <input type="submit" name="submit" class="spaced-form-element search-button btn btn-primary" disabled="disabled" value="Tweet"/>
+        </form>
+
+    </div>
+  </div>
+
+  <div class="panel panel-default col-md-5 col-lg-5 col-md-offset-1 col-lg-offset-1">
+    <div class="panel-heading">
+      <h1 class="h3">Company Tweets Sorted By:</h1>
+    </div>
+
+    <div class="panel-body">
+      <a class="btn btn-default" href="tweets_by_time" role="button">Time</a>
+      <a class="btn btn-default" href="tweets_by_retweets" role="button">Retweets</a>
+      <a class="btn btn-default" href="tweets_by_favourites" role="button">Favourites</a>
+    </div>
+  </div>
+</div>
+
+<%== erb :footer %>

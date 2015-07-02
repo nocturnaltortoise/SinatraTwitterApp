@@ -1,0 +1,56 @@
+<%== erb :header %>
+<!--Using two equals to unescape this html (escaped by default).-->
+
+<div class="container">
+  <div class="row">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="h3">Following</h1>
+      </div>
+      <div class="panel-body">
+        <p>Search for Username:</p>
+        <form class="form-inline" method="get">
+          <div class="form-group">
+            <input class="form-control disable-empty" type="text" name="search" id="search" value="<%=params[:search] %>" autofocus/>
+            <input class="btn btn-primary search-button" type="submit" name="submit" disabled="disabled" value="Submit"/>
+          </div>
+        </form>
+        <% if @no_results %>
+            No results found.
+        <% end %>
+        <div class="panel-body">
+        </div>
+
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Username</th>
+            <th></th>
+          </tr>
+          <tr>
+            <% @most_recent.each do |user| %>
+                <td>
+                  <div class="media">
+                    <div class="media-body">
+                      <h4 class="media-heading">
+                        <a href="http://twitter.com/<%= user.join %>">@<%= user.join %></a>
+                      </h4>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="media">
+                    <a class="btn btn-primary" href="/following?run=true&unfollow=<%= user.join %>">Unfollow</a>
+                  </div>
+                </td>
+                </tr>
+            <% end %>
+            </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%== erb :footer %>

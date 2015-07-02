@@ -1,0 +1,25 @@
+<%== erb :header %>
+
+<div class="container horizontally-centred">
+
+  <div class="well">
+
+    <% unless @error.nil? %>
+        <div class="alert alert-danger">
+          <p><%= @error %></p>
+        </div>
+    <% end %>
+
+    <form action="/change_email" method="post">
+
+      <div class="form-group">
+        <label for="emailInput">Enter your new email: </label>
+        <input class="form-control" id="emailInput" type="email" name = "email"/>
+      </div>
+      <input class="btn btn-primary" id="loginButton" type="submit" value="Change email" />
+
+    </form>
+  </div>
+</div>
+
+<%== erb :footer %>

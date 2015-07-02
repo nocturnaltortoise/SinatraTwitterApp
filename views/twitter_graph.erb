@@ -1,0 +1,40 @@
+<%== erb :header %>
+
+<div class="container">
+  <div class="row">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="h3">Search Twitter</h1>
+      </div>
+      <div class="panel-body">
+        <p>Please select (or enter) a search term to view the number of tweets
+          for that search term in the past 7 days</p>
+        <div class="panel-body">
+          <form class="form-inline" method="get">
+            <div class="form-group">
+            <label for="searchterm">Existing Search Terms:</label>
+            <select id="searchterm" name="searchterm">
+              <% @db_search_terms.each do |user| %>
+                <option value="<%=user.join%>"><%=user.join%></option>
+              <% end %>
+            </select>
+            <br/>
+            <label for="search">Search:</label>
+              <input type="text" name="search" id="search" value="<%=params[:search] %>" autofocus/>
+                <input class="btn btn-primary search-button" type="submit" name="submit" value="Submit"/>
+            </div>
+          </form>
+        </div>
+
+        <% unless @chart_url.nil? %>
+            <div class="panel-body">
+              <img id="results_graph" src="<%= @chart_url %>">
+            </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+</div>
+
+<%== erb :footer %>

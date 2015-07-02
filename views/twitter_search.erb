@@ -1,0 +1,120 @@
+<%== erb :header %>
+
+<div class="container">
+  <div class="row">
+
+    <div class="panel panel-default col-md-5 col-lg-5">
+      <div class="panel-heading">
+        <h1 class="h3">Search Twitter</h1>
+      </div>
+      <div class="panel-body">
+        <p>Hit "Automatic Search" to search for all the search terms in the list.</p>
+        <% puts @db_search_terms.length %>
+        <% if @db_search_terms.length == 0 %>
+            <form method="get" action="search_results">
+              <input class="btn btn-primary" type="submit" name="auto_search" value="Automatic Search" disabled/>
+            </form>
+        <% else %>
+            <form method="get" action="search_results">
+              <input class="btn btn-primary" type="submit" name="auto_search" value="Automatic Search"/>
+            </form>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="panel panel-default col-md-5 col-lg-5 col-md-offset-1 col-lg-offset-1">
+
+      <div class="panel-heading">
+        <h1 class="h3">Search Terms</h1>
+      </div>
+
+      <div class="panel-body">
+        <% unless @db_search_terms.nil? %>
+            <!--Displays a warning if there are no search terms.-->
+            <% if @db_search_terms.length == 0 %>
+                <p class="alert alert-danger"> No search terms in your list!</p>
+                <form class="form-inline" method="get" action="twitter_search">
+                  <div class="form-group">
+                    <input class="form-control" type="text" name="new_search_term" id="new_search_term" value="<%=params[:new_search_term] %>" autofocus/>
+                    <input class="btn btn-primary" type="submit" name="submit" value="+"/>
+                  </div>
+                </form>
+            <% else %>
+                <!--Displays the search terms with edit, delete and add controls.-->
+                <table class="table table-striped table-bordered">
+                  <tr>
+                    <th></th>
+                    <th>Search Term</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                  <% @db_search_terms.each_with_index do |term, index| %>
+                      <tr>
+                        <td>
+                          <%=index + 1%>
+                        </td>
+                        <td>
+                          <% if @editing %>
+                              <% if @editingTerm == term[0] %>
+                                  <form class="form-inline" method="post" action="edit_term">
+                                    <input class="form-control" type="text" name="edited_term" id="edited_term" value="<%=term[0] %>" autofocus/>
+                                    <input class="btn btn-success" type="submit" name="submit" value="Save"/>
+                                  </form>
+                              <% else %>
+                                  <input type="text" name="search_term" id="search_term" value="<%=term[0] %>" disabled>
+                              <% end %>
+                          <% else %>
+                              <input class="form-control" type="text" name="search_term" id="search_term" value="<%=term[0] %>" readonly>
+                          <% end %>
+                        </td>
+                        <td>
+                          <!--Link for changing a search term.-->
+                          <% if @editing %>
+                              <p>Edit</p>
+                          <% else %>
+                              <a href="?edit_term=<%=url_encode(term[0]) %>">Edit</a>
+                          <% end %>
+                        </td>
+                        <td>
+                          <!--Link to delete a search term.-->
+                          <% if @editing %>
+                              <p class="text-danger">Delete</p>
+                          <% else %>
+                              <a class="text-danger" href="?delete=<%= url_encode(term[0]) %>">Delete</a>
+                          <% end %>
+                        </td>
+                      </tr>
+                  <% end %>
+                  <tr>
+                    <td>
+                      <%= @db_search_terms.length+1 %>
+                    </td>
+                    <td>
+                      <!--Plus button for adding search terms.-->
+                      <% if @editing %>
+                          <form class="form-inline" method="post" action="add_term">
+                            <div class="form-group">
+                              <input class="form-control" type="text" name="new_search_term" id="new_search_term" placeholder="Add search term..." disabled/>
+                              <input class="btn btn-primary" type="submit" name="submit" value="+" disabled/>
+                            </div>
+                          </form>
+                      <% else %>
+                          <form class="form-inline" method="post" action="add_term">
+                            <div class="form-group">
+                              <input class="form-control" type="text" name="new_search_term" id="new_search_term" placeholder="Add search term..." autofocus/>
+                              <input class="btn btn-primary" type="submit" name="submit" value="+"/>
+                            </div>
+                          </form>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<%== erb :footer %>

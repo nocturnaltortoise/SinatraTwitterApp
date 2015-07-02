@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Group 10 | Twitter Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
+
+    <nav class="navbar navbar-inverse">
+     <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Group 10 Project</a>
+            </div>
+                <div class="navbar-collapse collapse">
+
+                   <ul class="nav navbar-nav">
+                     <li <% if @active=="home"%> class="active" <% end %> ><a href="/">Home</a></li>
+                     <li <% if @active=="twitter_search"%> class="active" <% end %> ><a href="twitter_search">Twitter Search</a></li>
+                     <li <% if @active=="twitter_graph"%> class="active" <% end %> ><a href="twitter_graph">Twitter Graph</a></li>
+                     <li <% if @active=="automatic_following"%> class="active" <% end %> ><a href="automatic_following">Automatic Following</a></li>
+                     <li <% if @active=="following"%> class="active" <% end %> ><a href="following">Following</a></li>
+                     <li <% if @active=="previously_followed"%> class="active" <% end %> ><a href="previously_followed">Previously Followed</a></li>
+                     <li <% if @active=="settings"%> class="active" <% end %> ><a href="settings">Settings</a></li>
+                     <li <% if @active=="logout"%> class="active" <% end %> ><a href="logout">Logout</a></li>
+                   </ul>
+
+            </div>
+    </div>
+    </nav>
